@@ -117,14 +117,14 @@ function analyzeSalesData(data, options) {
 
         const productList = Object.entries(seller.products_sold)
             .map(([sku, quantity]) => ({
-                sku: Number(sku),
+                sku,
                 quantity
             }))
             .sort((a, b) => {
                 if (a.quantity !== b.quantity) {
                     return b.quantity - a.quantity;
                 } else {
-                    return a.sku - b.sku;
+                    return a.sku.localeCompare(b.sku);
                 }
             })
             .slice(0, 10);
