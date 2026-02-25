@@ -110,7 +110,7 @@ function analyzeSalesData(data, options) {
 
 
         // выручка из чека
-        seller.revenue += Number(record.total_amount) - Number(record.total_discount);
+        seller.revenue += record.total_amount - record.total_discount;
 
 
         if (Array.isArray(record.items)) {
