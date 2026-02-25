@@ -87,21 +87,29 @@ function analyzeSalesData(data, options) {
         seller.revenue += record.total_amount - record.total_discount; 
 
         if (Array.isArray(record.items)) {
+
             record.items.forEach(item => {
-                const product = productIndex[item.sku];
-                if (!product) return;
-                
-                // Для прибыли используем calculateRevenue
-                const revenue = calculateRevenue(item, product);
-                const cost = product.purchase_price * item.quantity;
-                
-                seller.profit += (revenue - cost);
 
                 const sku = item.sku;
+
+            // SKU всегда учитываем
                 if (!seller.products_sold[sku]) {
                     seller.products_sold[sku] = 0;
                 }
-                seller.products_sold[sku] += item.quantity;
+
+                seller.products_sold[sku] += Number(item.quantity);
+
+
+            // Profit считаем отдельно
+                const product = productIndex[sku];
+                if (!product) return;
+
+                const revenue = calculateRevenue(item, product);
+
+                const cost = Number(product.purchase_price) * Number(item.quantity);
+
+                seller.profit += revenue - cost;
+
             });
         }
     });
