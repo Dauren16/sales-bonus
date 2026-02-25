@@ -116,8 +116,8 @@ function analyzeSalesData(data, options) {
         seller.bonus = calculateBonus(index, totalSellers, seller);
         const productList = Object.entries(seller.products_sold)
             .map(([sku, quantity]) => ({
-                sku,
-                quantity
+                sku: String(sku),
+                quantity: Number(quantity)
             }))
             .sort((a, b) => {
                 if (a.quantity !== b.quantity) {
