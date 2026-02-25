@@ -82,7 +82,10 @@ function analyzeSalesData(data, options) {
         const seller = sellerIndex[record.seller_id];
         if (!seller) return;
         
-        seller.sales_count += 1;
+        seller.sales_count += record.items.reduce(
+            (sum, item) => sum + Number(item.quantity),
+            0
+        );
         
 
         seller.revenue += Number(record.total_amount) - Number(record.total_discount); 
